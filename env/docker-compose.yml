@@ -22,7 +22,7 @@ services:
       - "./storage/mysql/data:/var/lib/mysql"
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: template_project
+      MYSQL_DATABASE: ag_grid_db
       MYSQL_TCP_PORT: 3306
 
   # Redis
@@ -37,6 +37,18 @@ services:
       - "./storage/redis/data:/data"
     ports:
       - "6379:6379"
+  
+  mongo:
+    image: mongo
+    restart: on-failure
+    ports:
+      - "27017:27017"
+    volumes:
+      - "./storage/mongodb:/data/db"
+    environment:
+      MONGO_INITDB_DATABASE: ag_grid_db
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
 
   # Main application in here
   # Always remember to change this according to your project name

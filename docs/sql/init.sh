@@ -4,7 +4,7 @@ set -euxo pipefail
 
 HOST="${MYSQL_HOST:-127.0.0.1}"
 PORT="${MYSQL_PORT:-3306}"
-DB_NAME="${MYSQL_DB:-template_project}"
+DB_NAME="${MYSQL_DB:-ag_grid_db}"
 USERNAME="${MYSQL_USER:-root}"
 PASSWORD="${MYSQL_PASSWORD:-password}"
 PROTOCOL="${MYSQL_PROTOCOL:-tcp}"
