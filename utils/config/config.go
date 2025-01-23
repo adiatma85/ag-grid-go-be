@@ -6,6 +6,7 @@ import (
 	"github.com/adiatma85/own-go-sdk/instrument"
 	"github.com/adiatma85/own-go-sdk/jwtAuth"
 	"github.com/adiatma85/own-go-sdk/log"
+	"github.com/adiatma85/own-go-sdk/mongo"
 	"github.com/adiatma85/own-go-sdk/parser"
 	"github.com/adiatma85/own-go-sdk/redis"
 	"github.com/adiatma85/own-go-sdk/sql"
@@ -20,6 +21,7 @@ type Application struct {
 	Instrument instrument.Config
 	Redis      redis.Config
 	JwtAuth    jwtAuth.Config
+	DocumentDB mongo.Config
 }
 
 type ApplicationMeta struct {

@@ -9,6 +9,7 @@ import (
 	"github.com/adiatma85/own-go-sdk/instrument"
 	"github.com/adiatma85/own-go-sdk/jwtAuth"
 	"github.com/adiatma85/own-go-sdk/log"
+	"github.com/adiatma85/own-go-sdk/mongo"
 	"github.com/adiatma85/own-go-sdk/parser"
 	"github.com/adiatma85/own-go-sdk/redis"
 	"github.com/adiatma85/own-go-sdk/sql"
@@ -55,8 +56,11 @@ func main() {
 	// Init the jwt
 	jwt := jwtAuth.Init(cfg.JwtAuth)
 
+	// mongo db
+	mongo := mongo.Init(cfg.DocumentDB, log, instr)
+
 	// Init the domain
-	d := domain.Init(domain.InitParam{Log: log, Db: db, Json: parsers.JSONParser(), Redis: cache})
+	d := domain.Init(domain.InitParam{Log: log, Db: db, Json: parsers.JSONParser(), Redis: cache, Mongo: mongo})
 
 	// Init the usecase
 	uc := usecase.Init(usecase.InitParam{Log: log, Dom: d, JwtAuth: jwt})
