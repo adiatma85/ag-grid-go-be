@@ -4,10 +4,11 @@ go 1.21
 
 require (
 	github.com/adiatma85/dark-gin-swagger v1.1.0
-	github.com/adiatma85/own-go-sdk v0.2.3
+	github.com/adiatma85/own-go-sdk v0.2.4
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/swag v1.16.2
+	go.mongodb.org/mongo-driver v1.17.2
 	golang.org/x/crypto v0.26.0
 )
 
@@ -45,7 +46,6 @@ require (
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78 // indirect
-	go.mongodb.org/mongo-driver v1.17.2 // indirect
 	golang.org/x/arch v0.5.0 // indirect
 	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect

@@ -167,6 +167,10 @@ func (r *rest) Register() {
 	publicv1 := r.http.Group("/public/v1/", commonPublicMiddlewares...)
 	publicv1.POST("/register", r.RegisterNewUserWithoutToken)
 
+	// ag-grid
+	publicv1.GET("/ag-grid/metrics", r.GetListMetricAgGrid)
+	publicv1.POST("/ag-grid/metrics", r.InsertAgMetric)
+
 	// auth api
 	authv1 := r.http.Group("/auth/v1", commonPublicMiddlewares...)
 	authv1.POST("/login", r.SignInWithPassword)
@@ -185,6 +189,7 @@ func (r *rest) Register() {
 	v1.GET("/admin/user", r.isAdmin, r.GetListUserAsAdmin)
 	v1.DELETE("/admin/user/:user_id", r.DeleteUser)
 	v1.PUT("/admin/user/:user_id", r.isAdmin, r.UpdateUser)
+
 }
 
 func (r *rest) registerSwaggerRoutes() {

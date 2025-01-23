@@ -19,6 +19,10 @@ type Interface interface {
 	GetList(ctx context.Context, params entity.AgGridMetricParam) ([]entity.AgGridMetric, *entity.Pagination, error)
 	Update(ctx context.Context, params entity.AgGridMetricParam, insertParam bson.M) error
 	Upsert(ctx context.Context, params entity.AgGridMetricParam, insertParam bson.M) error
+
+	// V2 Because we both use bson.M
+	UpdateV2(ctx context.Context, params, insertParam bson.M) error
+	UpsertV2(ctx context.Context, params, insertParam bson.M) error
 }
 
 type InitParam struct {
@@ -132,7 +136,36 @@ func (pm *pondMetricV2) Update(ctx context.Context, params entity.AgGridMetricPa
 	return nil
 }
 
+func (pm *pondMetricV2) UpdateV2(ctx context.Context, params, insertParam bson.M) error {
+	pm.log.Debug(ctx, fmt.Sprintf("update pond metric v2 with param: %v", params))
+
+	var err error
+
+	_, err = pm.mongo.Leader().Update(ctx, entity.AggridCollectionName, "update pond metric v2", params, insertParam)
+	if err != nil {
+		pm.log.Error(ctx, err)
+		return err
+	}
+
+	return nil
+}
+
 func (pm *pondMetricV2) Upsert(ctx context.Context, params entity.AgGridMetricParam, insertParam bson.M) error {
+	pm.log.Debug(ctx, fmt.Sprintf("upsert pond metric v2 with param: %v", params))
+
+	var err error
+
+	// TODO: Specify the Error Code on sdk/codes
+	_, err = pm.mongo.Leader().Upsert(ctx, entity.AggridCollectionName, "upsert pond metric v2", params, insertParam)
+	if err != nil {
+		pm.log.Error(ctx, err)
+		return err
+	}
+
+	return nil
+}
+
+func (pm *pondMetricV2) UpsertV2(ctx context.Context, params, insertParam bson.M) error {
 	pm.log.Debug(ctx, fmt.Sprintf("upsert pond metric v2 with param: %v", params))
 
 	var err error
