@@ -6,6 +6,7 @@ require (
 	github.com/adiatma85/dark-gin-swagger v1.1.0
 	github.com/adiatma85/own-go-sdk v0.2.4
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+	github.com/go-co-op/gocron v1.37.0
 	github.com/swaggo/files v1.0.1
 	github.com/swaggo/swag v1.16.2
 	go.mongodb.org/mongo-driver v1.17.2
@@ -40,12 +41,14 @@ require (
 	github.com/montanaflynn/stats v0.7.1 // indirect
 	github.com/nwidger/jsoncolor v0.3.2 // indirect
 	github.com/olekukonko/ts v0.0.0-20171002115256-78ecb04241c0 // indirect
+	github.com/robfig/cron/v3 v3.0.1 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
 	github.com/xdg-go/scram v1.1.2 // indirect
 	github.com/xdg-go/stringprep v1.0.4 // indirect
 	github.com/youmark/pkcs8 v0.0.0-20240726163527-a2c0da244d78 // indirect
+	go.uber.org/atomic v1.9.0 // indirect
 	golang.org/x/arch v0.5.0 // indirect
 	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect

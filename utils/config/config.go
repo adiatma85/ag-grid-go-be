@@ -22,6 +22,7 @@ type Application struct {
 	Redis      redis.Config
 	JwtAuth    jwtAuth.Config
 	DocumentDB mongo.Config
+	Scheduler  SchedulerConfig
 }
 
 type ApplicationMeta struct {
@@ -92,6 +93,19 @@ type ProfilerPprofConfig struct {
 	Enabled    bool
 	PathPrefix string
 	BasicAuth  BasicAuthConf
+}
+
+type SchedulerTaskConf struct {
+	Name          string
+	Enabled       bool
+	TimeType      string
+	Interval      time.Duration
+	ScheduledTime string
+}
+
+type SchedulerConfig struct {
+	DisableScheduler   bool
+	PopulateAgGridData SchedulerTaskConf
 }
 
 func Init() Application {

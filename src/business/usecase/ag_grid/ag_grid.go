@@ -3,6 +3,7 @@ package aggrid
 import (
 	"context"
 	"fmt"
+	"time"
 
 	aggridDomain "github.com/adiatma85/new-go-template/src/business/domain/ag_grid"
 	"github.com/adiatma85/new-go-template/src/business/domain/parameter"
@@ -10,6 +11,7 @@ import (
 	"github.com/adiatma85/new-go-template/src/business/domain/pond"
 	"github.com/adiatma85/new-go-template/src/business/entity"
 	"github.com/adiatma85/own-go-sdk/jwtAuth"
+	"github.com/adiatma85/own-go-sdk/query"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -57,7 +59,7 @@ func (a *aggrid) GetListMetric(ctx context.Context, metricParam entity.AgGridMet
 	return result, nil
 }
 
-// Kind of clumsy, but it's okay
+// Kind of clumsy, but it's okay for prototype
 func (a *aggrid) InsertingMetric(ctx context.Context, inputMetrics []entity.AggridMetricInput) error {
 	for _, inputeMetric := range inputMetrics {
 		fmt.Println(inputeMetric)
@@ -92,5 +94,32 @@ func (a *aggrid) convertMetricToBsonD(key string, value interface{}) bson.M {
 }
 
 func (a *aggrid) SchedulerToPopulateAgGridData(ctx context.Context) error {
+	// Fetch all the active pond
+	pondParam := entity.PondParam{
+		QueryOption: query.Option{
+			DisableLimit: true,
+			IsActive:     true,
+		},
+	}
+
+	ponds, _, _, err := a.pond.GetList(ctx, pondParam)
+	if err != nil {
+		return err
+	}
+
+	todayDate := time.Now()
+
+	for _, pond := range ponds {
+		insertionParam := bson.M{
+			"farm_id":     pond.FarmID,
+			"pond_id":     pond.ID,
+			"metric_date": todayDate.Format("2006-01-02"),
+		}
+		err = a.aggridDomain.Create(ctx, insertionParam)
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
