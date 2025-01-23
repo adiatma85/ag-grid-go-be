@@ -1,4 +1,4 @@
-package handler
+package rest
 
 import (
 	"context"
@@ -12,6 +12,7 @@ import (
 	ginSwagger "github.com/adiatma85/dark-gin-swagger"
 	"github.com/adiatma85/new-go-template/docs/swagger"
 	"github.com/adiatma85/new-go-template/src/business/usecase"
+	"github.com/adiatma85/new-go-template/src/handler/scheduler"
 	"github.com/adiatma85/new-go-template/utils/config"
 	"github.com/adiatma85/own-go-sdk/appcontext"
 	"github.com/adiatma85/own-go-sdk/instrument"
@@ -42,6 +43,7 @@ type rest struct {
 	uc         *usecase.Usecase
 	instrument instrument.Interface
 	jwtAuth    jwtAuth.Interface
+	scheduler  scheduler.Interface
 }
 
 type InitParam struct {
@@ -52,6 +54,7 @@ type InitParam struct {
 	Uc         *usecase.Usecase
 	Instrument instrument.Interface
 	JwtAuth    jwtAuth.Interface
+	Scheduler  scheduler.Interface
 }
 
 func Init(param InitParam) REST {
@@ -77,6 +80,7 @@ func Init(param InitParam) REST {
 			uc:         param.Uc,
 			instrument: param.Instrument,
 			jwtAuth:    param.JwtAuth,
+			scheduler:  param.Scheduler,
 		}
 
 		// Set CORS
@@ -170,6 +174,9 @@ func (r *rest) Register() {
 	// ag-grid
 	publicv1.GET("/ag-grid/metrics", r.GetListMetricAgGrid)
 	publicv1.POST("/ag-grid/metrics", r.InsertAgMetric)
+
+	// scheduler trigger
+	publicv1.POST("/scheduler/trigger", r.TriggerScheduler)
 
 	// auth api
 	authv1 := r.http.Group("/auth/v1", commonPublicMiddlewares...)

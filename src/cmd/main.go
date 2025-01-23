@@ -3,7 +3,8 @@ package main
 import (
 	"github.com/adiatma85/new-go-template/src/business/domain"
 	"github.com/adiatma85/new-go-template/src/business/usecase"
-	"github.com/adiatma85/new-go-template/src/handler"
+	"github.com/adiatma85/new-go-template/src/handler/rest"
+	"github.com/adiatma85/new-go-template/src/handler/scheduler"
 	"github.com/adiatma85/new-go-template/utils/config"
 	"github.com/adiatma85/own-go-sdk/configreader"
 	"github.com/adiatma85/own-go-sdk/instrument"
@@ -13,6 +14,7 @@ import (
 	"github.com/adiatma85/own-go-sdk/parser"
 	"github.com/adiatma85/own-go-sdk/redis"
 	"github.com/adiatma85/own-go-sdk/sql"
+	"github.com/adiatma85/own-go-sdk/timelib"
 )
 
 // @contact.name   Rahmadhani Lucky Adiatma
@@ -59,14 +61,24 @@ func main() {
 	// mongo db
 	mongo := mongo.Init(cfg.DocumentDB, log, instr)
 
+	// timelib
+	timelib := timelib.Init()
+
 	// Init the domain
-	d := domain.Init(domain.InitParam{Log: log, Db: db, Json: parsers.JSONParser(), Redis: cache, Mongo: mongo})
+	d := domain.Init(domain.InitParam{Log: log, Db: db, Json: parsers.JSONParser(), Redis: cache, Mongo: mongo, Timelib: timelib})
 
 	// Init the usecase
 	uc := usecase.Init(usecase.InitParam{Log: log, Dom: d, JwtAuth: jwt})
 
-	// Init the GIN
-	rest := handler.Init(handler.InitParam{Conf: cfg.Gin, Json: parsers.JSONParser(), Log: log, Uc: uc, Instrument: instr, JwtAuth: jwt})
+	// Scheduler
+	scheduler := scheduler.Init(scheduler.InitParam{Conf: cfg.Scheduler, MetaConf: cfg.Meta, Log: log, JwtAuth: jwt, Uc: uc, Instr: instr})
 
+	// Init the GIN
+	rest := rest.Init(rest.InitParam{Conf: cfg.Gin, Json: parsers.JSONParser(), Log: log, Uc: uc, Instrument: instr, JwtAuth: jwt, Scheduler: scheduler})
+
+	// run scheduler
+	scheduler.Run()
+
+	// Run the REST
 	rest.Run()
 }

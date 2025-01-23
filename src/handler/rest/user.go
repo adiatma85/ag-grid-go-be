@@ -1,4 +1,4 @@
-package handler
+package rest
 
 import (
 	"github.com/adiatma85/new-go-template/src/business/entity"
