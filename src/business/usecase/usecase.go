@@ -22,7 +22,7 @@ type InitParam struct {
 func Init(param InitParam) *Usecase {
 	usecase := &Usecase{
 		User:   user.Init(user.InitParam{Log: param.Log, User: param.Dom.User, JwtAuth: param.JwtAuth}),
-		Aggrid: aggrid.Init(aggrid.InitParam{AggridDomain: param.Dom.AgGrid, JwtAuth: param.JwtAuth, Parameter: param.Dom.Parameter, ParameterColumnIndex: param.Dom.ParameterColumnIndex, Pond: param.Dom.Pond}),
+		Aggrid: aggrid.Init(aggrid.InitParam{AggridDomain: param.Dom.AgGrid, JwtAuth: param.JwtAuth, Parameter: param.Dom.Parameter, ParameterColumnIndex: param.Dom.ParameterColumnIndex, Pond: param.Dom.Pond, Log: param.Log}),
 	}
 
 	return usecase

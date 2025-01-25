@@ -11,6 +11,7 @@ import (
 	"github.com/adiatma85/new-go-template/src/business/domain/pond"
 	"github.com/adiatma85/new-go-template/src/business/entity"
 	"github.com/adiatma85/own-go-sdk/jwtAuth"
+	"github.com/adiatma85/own-go-sdk/log"
 	"github.com/adiatma85/own-go-sdk/query"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -28,6 +29,7 @@ type InitParam struct {
 	Parameter            parameter.Interface
 	ParameterColumnIndex parameter_column_index.Interface
 	Pond                 pond.Interface
+	Log                  log.Interface
 }
 
 type aggrid struct {
@@ -36,6 +38,7 @@ type aggrid struct {
 	parameter            parameter.Interface
 	parameterColumnIndex parameter_column_index.Interface
 	pond                 pond.Interface
+	log                  log.Interface
 }
 
 func Init(param InitParam) Interface {
@@ -45,6 +48,7 @@ func Init(param InitParam) Interface {
 		parameter:            param.Parameter,
 		parameterColumnIndex: param.ParameterColumnIndex,
 		pond:                 param.Pond,
+		log:                  param.Log,
 	}
 
 	return pm
@@ -62,8 +66,11 @@ func (a *aggrid) GetListMetric(ctx context.Context, metricParam entity.AgGridMet
 // Kind of clumsy, but it's okay for prototype
 func (a *aggrid) InsertingMetric(ctx context.Context, inputMetrics []entity.AggridMetricInput) error {
 	for _, inputeMetric := range inputMetrics {
-		fmt.Println(inputeMetric)
-		inserItem := a.convertMetricToBsonD(inputeMetric.AttributeName, inputeMetric.Value)
+		inserItem, err := a.convertMetricToBsonD(ctx, inputeMetric.AttributeName, inputeMetric.Value)
+		if err != nil {
+			a.log.Error(ctx, fmt.Sprintf("Error converting metric to bson with key: %v", inputeMetric.AttributeName))
+			continue
+		}
 
 		objectID, err := primitive.ObjectIDFromHex(inputeMetric.ID)
 		if err != nil {
@@ -83,14 +90,34 @@ func (a *aggrid) InsertingMetric(ctx context.Context, inputMetrics []entity.Aggr
 	return nil
 }
 
-func (a *aggrid) convertMetricToBsonD(key string, value interface{}) bson.M {
+func (a *aggrid) convertMetricToBsonD(ctx context.Context, key string, value interface{}) (bson.M, error) {
+
+	// must check the type of the formula
+	parameterParam := entity.ParameterParam{
+		Name: key,
+		QueryOption: query.Option{
+			IsActive: true,
+		},
+	}
+
+	parameter, err := a.parameter.Get(ctx, parameterParam)
+	if err != nil {
+		return bson.M{}, err
+	}
+
+	if parameter.InputType.String == "number" {
+		valueFloat64 := value.(float64)
+		value = valueFloat64
+
+	}
+
 	insertItem := bson.M{
 		"$set": bson.M{
 			key: value,
 		},
 	}
 
-	return insertItem
+	return insertItem, nil
 }
 
 func (a *aggrid) SchedulerToPopulateAgGridData(ctx context.Context) error {
