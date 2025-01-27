@@ -248,21 +248,21 @@ type AgGridMetric struct {
 	NitritDilutionFactor   null.Float64 `name:"nitrit_dilution_factor" bson:"nitrit_dilution_factor,omitempty" json:"nitrit_dilution_factor"`
 	NitritBlanko           null.Float64 `name:"nitrit_blanko" bson:"nitrit_blanko,omitempty" json:"nitrit_blanko"`
 	NitritAbsAs            null.Float64 `name:"nitrit_abs_as" bson:"nitrit_abs_as,omitempty" json:"nitrit_abs_as"`
-	NitritSampleVolume     null.Float64 `name:"nitrit_sample_volume" bson:"nitrit_sample_volume,omitempty" json:"nitrit_sample_volume"`
+	NitritSampleVolume     null.Float64 `name:"nitrit_volume_sample" bson:"nitrit_volume_sample,omitempty" json:"nitrit_volume_sample"`
 	NitritConcC            null.Float64 `name:"nitrit_conc_c" bson:"nitrit_conc_c,omitempty" json:"nitrit_conc_c"`
-	NitritDescription      null.Float64 `name:"nitrit_description" bson:"nitrit_description,omitempty" json:"nitrit_description"`
+	NitritDescription      null.String  `name:"nitrit_description" bson:"nitrit_description,omitempty" json:"nitrit_description"`
 	FosfatDilutionFactor   null.Float64 `name:"fosfat_dilution_factor" bson:"fosfat_dilution_factor,omitempty" json:"fosfat_dilution_factor"`
 	FosfatBlanko           null.Float64 `name:"fosfat_blanko" bson:"fosfat_blanko,omitempty" json:"fosfat_blanko"`
 	FosfatAbsAs            null.Float64 `name:"fosfat_abs_as" bson:"fosfat_abs_as,omitempty" json:"fosfat_abs_as"`
-	FosfatSampleVolume     null.Float64 `name:"fosfat_sample_volume" bson:"fosfat_sample_volume,omitempty" json:"fosfat_sample_volume"`
+	FosfatSampleVolume     null.Float64 `name:"fosfat_volume_sample" bson:"fosfat_volume_sample,omitempty" json:"fosfat_volume_sample"`
 	FosfatConcC            null.Float64 `name:"fosfat_conc_c" bson:"fosfat_conc_c,omitempty" json:"fosfat_conc_c"`
-	FosfatDescription      null.Float64 `name:"fosfat_description" bson:"fosfat_description,omitempty" json:"fosfat_description"`
+	FosfatDescription      null.String  `name:"fosfat_description" bson:"fosfat_description,omitempty" json:"fosfat_description"`
 	TanDilutionFactor      null.Float64 `name:"tan_dilution_factor" bson:"tan_dilution_factor,omitempty" json:"tan_dilution_factor"`
 	TanBlanko              null.Float64 `name:"tan_blanko" bson:"tan_blanko,omitempty" json:"tan_blanko"`
 	TanAbsAs               null.Float64 `name:"tan_abs_as" bson:"tan_abs_as,omitempty" json:"tan_abs_as"`
-	TanSampleVolume        null.Float64 `name:"tan_sample_volume" bson:"tan_sample_volume,omitempty" json:"tan_sample_volume"`
+	TanSampleVolume        null.Float64 `name:"tan_volume_sample" bson:"tan_volume_sample,omitempty" json:"tan_volume_sample"`
 	TanConcC               null.Float64 `name:"tan_conc_c" bson:"tan_conc_c,omitempty" json:"tan_conc_c"`
-	TanDescription         null.Float64 `name:"tan_description" bson:"tan_description,omitempty" json:"tan_description"`
+	TanDescription         null.String  `name:"tan_description" bson:"tan_description,omitempty" json:"tan_description"`
 	UnionizedTan           null.Float64 `name:"unionized_tan" bson:"unionized_tan,omitempty" json:"unionized_tan"`
 	I                      null.Float64 `name:"i" bson:"i,omitempty" json:"i"`
 	PkaS                   null.Float64 `name:"pka_s" bson:"pka_s,omitempty" json:"pka_s"`
@@ -412,42 +412,55 @@ type AgGridMetric struct {
 	BacteryTotal        null.Float64 `name:"bactery_total" bson:"bactery_total,omitempty" json:"bactery_total"`
 
 	// Bactery TVC and TBC (In Lab Calculation Sheet)
-	InoculumTvc1            null.Float64 `name:"inoculum_tvc_1" bson:"inoculumTvc1,omitempty" json:"inoculum_tvc_1"`
-	DilutionFactorTvc1      null.Float64 `name:"dilution_factor_tvc_1" bson:"dilutionFactorTvc1,omitempty" json:"dilution_factor_tvc_1"`
-	YellowPetri1Tvc1        null.Float64 `name:"yellow_petri1_tvc_1" bson:"yellowPetri1Tvc1,omitempty" json:"yellow_petri1_tvc_1"`
-	GreenPetri1Tvc1         null.Float64 `name:"green_petri1_tvc_1" bson:"greenPetri1Tvc1,omitempty" json:"green_petri1_tvc_1"`
-	BlackPetri1Tvc1         null.Float64 `name:"black_petri1_tvc_1" bson:"blackPetri1Tvc1,omitempty" json:"black_petri1_tvc_1"`
-	AdjustedCountPetri1Tvc1 null.Float64 `name:"adjusted_count_petri1_tvc_1" bson:"adjustedCountPetri1Tvc1,omitempty" json:"adjusted_count_petri1_tvc_1"`
-	YellowPetri2Tvc1        null.Float64 `name:"yellow_petri2_tvc_1" bson:"yellowPetri2Tvc1,omitempty" json:"yellow_petri2_tvc_1"`
-	GreenPetri2Tvc1         null.Float64 `name:"green_petri2_tvc_1" bson:"greenPetri2Tvc1,omitempty" json:"green_petri2_tvc_1"`
-	BlackPetri2Tvc1         null.Float64 `name:"black_petri2_tvc_1" bson:"blackPetri2Tvc1,omitempty" json:"black_petri2_tvc_1"`
-	AdjustedCountPetri2Tvc1 null.Float64 `name:"adjusted_count_petri2_tvc_1" bson:"adjustedCountPetri2Tvc1,omitempty" json:"adjusted_count_petri2_tvc_1"`
-	TotalCountTvc1          null.Float64 `name:"total_count_tvc_1" bson:"totalCountTvc1,omitempty" json:"total_count_tvc_1"`
-	DilutionFactorTvc2      null.Float64 `name:"dilution_factor_tvc_2" bson:"dilutionFactorTvc2,omitempty" json:"dilution_factor_tvc_2"`
-	YellowPetri1Tvc2        null.Float64 `name:"yellow_petri1_tvc_2" bson:"yellowPetri1Tvc2,omitempty" json:"yellow_petri1_tvc_2"`
-	GreenPetri1Tvc2         null.Float64 `name:"green_petri1_tvc_2" bson:"greenPetri1Tvc2,omitempty" json:"green_petri1_tvc_2"`
-	BlackPetri1Tvc2         null.Float64 `name:"black_petri1_tvc_2" bson:"blackPetri1Tvc2,omitempty" json:"black_petri1_tvc_2"`
-	AdjustedCountPetri1Tvc2 null.Float64 `name:"adjusted_count_petri1_tvc_2" bson:"adjustedCountPetri1Tvc2,omitempty" json:"adjusted_count_petri1_tvc_2"`
-	TotalCountTvc2          null.Float64 `name:"total_count_tvc_2" bson:"totalCountTvc2,omitempty" json:"total_count_tvc_2"`
-	InoculumTbc1            null.Float64 `name:"inoculum_tbc_1" bson:"inoculumTbc1,omitempty" json:"inoculum_tbc_1"`
-	DilutionFactorTbc1      null.Float64 `name:"dilution_factor_tbc_1" bson:"dilutionFactorTbc1,omitempty" json:"dilution_factor_tbc_1"`
-	Petri1Tbc1              null.Float64 `name:"petri1_tbc_1" bson:"petri1Tbc1,omitempty" json:"petri1_tbc_1"`
-	AdjustedCountPetri1Tbc1 null.Float64 `name:"adjusted_count_petri1_tbc_1" bson:"adjustedCountPetri1Tbc1,omitempty" json:"adjusted_count_petri1_tbc_1"`
-	Petri2Tbc1              null.Float64 `name:"petri2_tbc_1" bson:"petri2Tbc1,omitempty" json:"petri2_tbc_1"`
-	AdjustedCountPetri2Tbc1 null.Float64 `name:"adjusted_count_petri2_tbc_1" bson:"adjustedCountPetri2Tbc1,omitempty" json:"adjusted_count_petri2_tbc_1"`
-	TotalCountTbc1          null.Float64 `name:"total_count_tbc_1" bson:"totalCountTbc1,omitempty" json:"total_count_tbc_1"`
-	DilutionFactorTbc2      null.Float64 `name:"dilution_factor_tbc_2" bson:"dilutionFactorTbc2,omitempty" json:"dilution_factor_tbc_2"`
-	Petri1Tbc2              null.Float64 `name:"petri1_tbc_2" bson:"petri1Tbc2,omitempty" json:"petri1_tbc_2"`
-	AdjustedCountPetri1Tbc2 null.Float64 `name:"adjusted_count_petri1_tbc_2" bson:"adjustedCountPetri1Tbc2,omitempty" json:"adjusted_count_petri1_tbc_2"`
-	Petri2Tbc2              null.Float64 `name:"petri2_tbc_2" bson:"petri2Tbc2,omitempty" json:"petri2_tbc_2"`
-	AdjustedCountPetri2Tbc2 null.Float64 `name:"adjusted_count_petri2_tbc_2" bson:"adjustedCountPetri2Tbc2,omitempty" json:"adjusted_count_petri2_tbc_2"`
-	TotalCountTbc2          null.Float64 `name:"total_count_tbc_2" bson:"totalCountTbc2,omitempty" json:"total_count_tbc_2"`
+	InoculumTvc1 null.Float64 `name:"inoculum_tvc_1" bson:"inoculum_tvc_1,omitempty" json:"inoculum_tvc_1"`
+
+	DilutionFactorTvc1 null.Float64 `name:"dilution_factor_tvc_1" bson:"dilution_factor_tvc_1,omitempty" json:"dilution_factor_tvc_1"`
+
+	YellowPetri1Tvc1        null.Float64 `name:"yellow_petri1_tvc_1" bson:"yellow_petri1_tvc_1,omitempty" json:"yellow_petri1_tvc_1"`
+	GreenPetri1Tvc1         null.Float64 `name:"green_petri1_tvc_1" bson:"green_petri1_tvc_1,omitempty" json:"green_petri1_tvc_1"`
+	BlackPetri1Tvc1         null.Float64 `name:"black_petri1_tvc_1" bson:"black_petri1_tvc_1,omitempty" json:"black_petri1_tvc_1"`
+	AdjustedCountPetri1Tvc1 null.Float64 `name:"adjusted_count_petri1_tvc_1" bson:"adjusted_count_petri1_tvc_1,omitempty" json:"adjusted_count_petri1_tvc_1"`
+
+	YellowPetri2Tvc1        null.Float64 `name:"yellow_petri2_tvc_1" bson:"yellow_petri2_tvc_1,omitempty" json:"yellow_petri2_tvc_1"`
+	GreenPetri2Tvc1         null.Float64 `name:"green_petri2_tvc_1" bson:"green_petri2_tvc_1,omitempty" json:"green_petri2_tvc_1"`
+	BlackPetri2Tvc1         null.Float64 `name:"black_petri2_tvc_1" bson:"black_petri2_tvc_1,omitempty" json:"black_petri2_tvc_1"`
+	AdjustedCountPetri2Tvc1 null.Float64 `name:"adjusted_count_petri2_tvc_1" bson:"adjusted_count_petri2_tvc_1,omitempty" json:"adjusted_count_petri2_tvc_1"`
+
+	TotalCountTvc1 null.Float64 `name:"total_count_tvc_1" bson:"total_count_tvc_1,omitempty" json:"total_count_tvc_1"`
+
+	DilutionFactorTvc2 null.Float64 `name:"dilution_factor_tvc_2" bson:"dilution_factor_tvc_2,omitempty" json:"dilution_factor_tvc_2"`
+
+	YellowPetri1Tvc2        null.Float64 `name:"yellow_petri1_tvc_2" bson:"yellow_petri1_tvc_2,omitempty" json:"yellow_petri1_tvc_2"`
+	GreenPetri1Tvc2         null.Float64 `name:"green_petri1_tvc_2" bson:"green_petri1_tvc_2,omitempty" json:"green_petri1_tvc_2"`
+	BlackPetri1Tvc2         null.Float64 `name:"black_petri1_tvc_2" bson:"black_petri1_tvc_2,omitempty" json:"black_petri1_tvc_2"`
+	AdjustedCountPetri1Tvc2 null.Float64 `name:"adjusted_count_petri1_tvc_2" bson:"adjusted_count_petri1_tvc_2,omitempty" json:"adjusted_count_petri1_tvc_2"`
+
+	YellowPetri2Tvc2        null.Float64 `name:"yellow_petri2_tvc_2" bson:"yellow_petri2_tvc_2,omitempty" json:"yellow_petri2_tvc_2"`
+	GreenPetri2Tvc2         null.Float64 `name:"green_petri2_tvc_2" bson:"green_petri2_tvc_2,omitempty" json:"green_petri2_tvc_2"`
+	BlackPetri2Tvc2         null.Float64 `name:"black_petri2_tvc_2" bson:"black_petri2_tvc_2,omitempty" json:"black_petri2_tvc_2"`
+	AdjustedCountPetri2Tvc2 null.Float64 `name:"adjusted_count_petri2_tvc_2" bson:"adjusted_count_petri2_tvc_2,omitempty" json:"adjusted_count_petri2_tvc_2"`
+
+	TotalCountTvc2 null.Float64 `name:"total_count_tvc_2" bson:"total_count_tvc_2,omitempty" json:"total_count_tvc_2"`
+
+	InoculumTbc1            null.Float64 `name:"inoculum_tbc_1" bson:"inoculum_tbc_1,omitempty" json:"inoculum_tbc_1"`
+	DilutionFactorTbc1      null.Float64 `name:"dilution_factor_tbc_1" bson:"dilution_factor_tbc_1,omitempty" json:"dilution_factor_tbc_1"`
+	Petri1Tbc1              null.Float64 `name:"petri1_tbc_1" bson:"petri1_tbc_1,omitempty" json:"petri1_tbc_1"`
+	AdjustedCountPetri1Tbc1 null.Float64 `name:"adjusted_count_petri1_tbc_1" bson:"adjusted_count_petri1_tbc_1,omitempty" json:"adjusted_count_petri1_tbc_1"`
+	Petri2Tbc1              null.Float64 `name:"petri2_tbc_1" bson:"petri2_tbc_1,omitempty" json:"petri2_tbc_1"`
+	AdjustedCountPetri2Tbc1 null.Float64 `name:"adjusted_count_petri2_tbc_1" bson:"adjusted_count_petri2_tbc_1,omitempty" json:"adjusted_count_petri2_tbc_1"`
+	TotalCountTbc1          null.Float64 `name:"total_count_tbc_1" bson:"total_count_tbc_1,omitempty" json:"total_count_tbc_1"`
+	DilutionFactorTbc2      null.Float64 `name:"dilution_factor_tbc_2" bson:"dilution_factor_tbc_2,omitempty" json:"dilution_factor_tbc_2"`
+	Petri1Tbc2              null.Float64 `name:"petri1_tbc_2" bson:"petri1_tbc_2,omitempty" json:"petri1_tbc_2"`
+	AdjustedCountPetri1Tbc2 null.Float64 `name:"adjusted_count_petri1_tbc_2" bson:"adjusted_count_petri1_tbc_2,omitempty" json:"adjusted_count_petri1_tbc_2"`
+	Petri2Tbc2              null.Float64 `name:"petri2_tbc_2" bson:"petri2_tbc_2,omitempty" json:"petri2_tbc_2"`
+	AdjustedCountPetri2Tbc2 null.Float64 `name:"adjusted_count_petri2_tbc_2" bson:"adjusted_count_petri2_tbc_2,omitempty" json:"adjusted_count_petri2_tbc_2"`
+	TotalCountTbc2          null.Float64 `name:"total_count_tbc_2" bson:"total_count_tbc_2,omitempty" json:"total_count_tbc_2"`
 
 	// Calibration Curvature
 	NitritSlope      null.Float64 `name:"nitrit_slope" bson:"nitrit_slope,omitempty" json:"nitrit_slope"`
 	NitritIntercept  null.Float64 `name:"nitrit_intercept" bson:"nitrit_intercept,omitempty" json:"nitrit_intercept"`
-	PhospatSlope     null.Float64 `name:"phospat_slope" bson:"phospat_slope,omitempty" json:"phospat_slope"`
-	PhospatIntercept null.Float64 `name:"phospat_intercept" bson:"phospat_intercept,omitempty" json:"phospat_intercept"`
+	PhospatSlope     null.Float64 `name:"phosphat_slope" bson:"phosphat_slope,omitempty" json:"phosphat_slope"`
+	PhospatIntercept null.Float64 `name:"phosphat_intercept" bson:"phosphat_intercept,omitempty" json:"phosphat_intercept"`
 	TANSlope         null.Float64 `name:"tan_slope" bson:"tan_slope,omitempty" json:"tan_slope"`
 	TANIntercept     null.Float64 `name:"tan_intercept" bson:"tan_intercept,omitempty" json:"tan_intercept"`
 

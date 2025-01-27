@@ -3,6 +3,7 @@ package aggrid
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"time"
 
 	aggridDomain "github.com/adiatma85/new-go-template/src/business/domain/ag_grid"
@@ -105,9 +106,18 @@ func (a *aggrid) convertMetricToBsonD(ctx context.Context, key string, value int
 		return bson.M{}, err
 	}
 
-	if parameter.InputType.String == "number" {
-		valueFloat64 := value.(float64)
-		value = valueFloat64
+	if parameter.FieldType.String == "float" || parameter.FieldType.String == "integer" {
+		switch v := value.(type) {
+		case float64:
+			value = v
+		case string:
+			validFloat, err := strconv.ParseFloat(v, 64)
+			if err != nil {
+				return bson.M{}, err
+			}
+
+			value = validFloat
+		}
 
 	}
 
